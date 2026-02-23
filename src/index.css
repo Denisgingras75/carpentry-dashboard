@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+/* ========================================
+   Workshop Theme — Carpentry Dashboard
+   ======================================== */
+
+@theme {
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  /* Workshop (Light) */
+  --color-primary: #8B5E3C;
+  --color-primary-hover: #7A5235;
+  --color-accent: #C8922A;
+  --color-accent-hover: #B8841F;
+  --color-bg: #F5F0EB;
+  --color-surface: #FAF7F4;
+  --color-surface-elevated: #FFFFFF;
+  --color-card: #FFFFFF;
+  --color-text-primary: #2C1810;
+  --color-text-secondary: #6B5B4E;
+  --color-text-tertiary: #9C8B7E;
+  --color-text-on-primary: #FFFFFF;
+  --color-success: #2D6A4F;
+  --color-success-bg: #D4EDDA;
+  --color-warning: #C8922A;
+  --color-warning-bg: #FFF3CD;
+  --color-danger: #C0392B;
+  --color-danger-bg: #F8D7DA;
+  --color-border: #E0D5C9;
+  --color-border-light: #EDE7DF;
+  --color-rating-1: #C0392B;
+  --color-rating-2: #D35400;
+  --color-rating-3: #C8922A;
+  --color-rating-4: #2D6A4F;
+  --color-rating-5: #1B5E3A;
+  --color-heatmap-0: #EDE7DF;
+  --color-heatmap-1: #D4C4A8;
+  --color-heatmap-2: #C8922A;
+  --color-heatmap-3: #8B5E3C;
+  --color-heatmap-4: #5C3A1E;
+  --shadow-card: 0 1px 3px rgba(44, 24, 16, 0.08);
+  --shadow-elevated: 0 4px 12px rgba(44, 24, 16, 0.12);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+/* Night Shop (Dark) */
+[data-theme="dark"] {
+  --color-primary: #C8922A;
+  --color-primary-hover: #D9A43B;
+  --color-accent: #D4A85C;
+  --color-accent-hover: #E0BA6E;
+  --color-bg: #1A1208;
+  --color-surface: #241A0E;
+  --color-surface-elevated: #2E2214;
+  --color-card: #2E2214;
+  --color-text-primary: #F5F0EB;
+  --color-text-secondary: #B8A99A;
+  --color-text-tertiary: #7D6E5E;
+  --color-text-on-primary: #1A1208;
+  --color-success: #6BB384;
+  --color-success-bg: #1A3A2A;
+  --color-warning: #D4A85C;
+  --color-warning-bg: #3A2E1A;
+  --color-danger: #E07B6B;
+  --color-danger-bg: #3A1A1A;
+  --color-border: #3E3024;
+  --color-border-light: #342818;
+  --color-heatmap-0: #2E2214;
+  --color-heatmap-1: #4A3A24;
+  --color-heatmap-2: #8B6E3C;
+  --color-heatmap-3: #C8922A;
+  --color-heatmap-4: #D4A85C;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================================
+   Utility Classes
+   ======================================== */
+
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border-light);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-secondary:hover {
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: none;
+  padding: 8px 14px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+
+.btn-ghost:hover {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+  font-size: 0.9375rem;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+textarea.input {
+  resize: vertical;
+  min-height: 80px;
+}
+
+select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B5B4E' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+/* ========================================
+   Fit Rating Dots
+   ======================================== */
+
+.fit-rating {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.fit-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-border);
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.fit-dot.active.r1 { background: var(--color-rating-1); }
+.fit-dot.active.r2 { background: var(--color-rating-2); }
+.fit-dot.active.r3 { background: var(--color-rating-3); }
+.fit-dot.active.r4 { background: var(--color-rating-4); }
+.fit-dot.active.r5 { background: var(--color-rating-5); }
+
+/* ========================================
+   Scrollbar
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeIn 0.2s ease-out;
+}
