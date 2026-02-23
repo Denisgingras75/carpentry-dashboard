@@ -121,7 +121,7 @@ export default function LogDetail() {
           </>
         ) : (
           <>
-            <h2 className="text-lg font-bold" style={{ color: 'var(--color-text-primary)' }}>{log.joint_type}</h2>
+            <h2 className="font-display" style={{ fontSize: '1.375rem', color: 'var(--color-text-primary)' }}>{log.joint_type}</h2>
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
               {log.wood_species && <span>Wood: {log.wood_species}</span>}
               {log.gap_mm != null && <span>Gap: {log.gap_mm}mm</span>}

@@ -43,7 +43,7 @@ export default function Portfolio() {
   return (
     <div className="p-4 max-w-2xl mx-auto w-full flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Portfolio</h1>
+        <h1 className="font-display" style={{ fontSize: '1.5rem', color: 'var(--color-text-primary)' }}>Portfolio</h1>
         <button className="btn-primary text-sm" onClick={() => setShowForm(!showForm)}>
           {showForm ? 'Cancel' : '+ New'}
         </button>
@@ -69,11 +69,11 @@ export default function Portfolio() {
       {loading ? (
         <div className="py-12 text-center" style={{ color: 'var(--color-text-tertiary)' }}>Loading...</div>
       ) : items.length === 0 ? (
-        <EmptyState icon="🏗️" title="No portfolio items" description="Add completed projects to showcase your work." />
+        <EmptyState icon="🏗️" title="Your gallery is empty" description="Finished a build? Add it here. Photos, materials, the joints you used — a record of what your hands made." />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {items.map(item => (
-            <Link key={item.id} to={`/portfolio/${item.id}`} className="card p-4 flex flex-col gap-2" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link key={item.id} to={`/portfolio/${item.id}`} className="card-accent p-4 flex flex-col gap-2" style={{ textDecoration: 'none', color: 'inherit' }}>
               <h3 className="font-semibold text-sm">{item.title}</h3>
               {item.description && (
                 <p className="text-xs line-clamp-2" style={{ color: 'var(--color-text-secondary)' }}>{item.description}</p>

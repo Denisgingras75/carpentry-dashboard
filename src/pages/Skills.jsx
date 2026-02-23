@@ -1,12 +1,10 @@
-import { useMemo } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { usePracticeLogs } from '../hooks/usePracticeLogs'
 import EmptyState from '../components/EmptyState'
 
 function ProgressChart({ logs }) {
-  // Gap over time per joint type (inverted Y: lower gap = higher skill)
   const jointTypes = [...new Set(logs.filter(l => l.gap_mm != null).map(l => l.joint_type))]
-  const colors = ['#8B5E3C', '#C8922A', '#2D6A4F', '#C0392B', '#D35400', '#1B5E3A']
+  const colors = ['var(--color-primary)', 'var(--color-accent)', 'var(--color-success)', 'var(--color-danger)', '#D35400', '#1B5E3A']
 
   if (jointTypes.length === 0) return null
 
@@ -28,10 +26,9 @@ function ProgressChart({ logs }) {
 
   return (
     <div className="card p-4">
-      <h3 className="font-semibold text-sm mb-3" style={{ color: 'var(--color-text-primary)' }}>Gap Over Time</h3>
-      <p className="text-xs mb-2" style={{ color: 'var(--color-text-tertiary)' }}>Lower is better — tighter joints</p>
+      <h3 className="font-display mb-1" style={{ fontSize: '1.125rem', color: 'var(--color-text-primary)' }}>Gap Over Time</h3>
+      <p className="text-xs mb-3" style={{ color: 'var(--color-text-tertiary)' }}>Lower is better — tighter joints</p>
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ maxHeight: 250 }}>
-        {/* Grid lines */}
         {[0, 1, 2, 3, 4].map(i => {
           const gapVal = (maxGap / 4) * i
           return (
@@ -45,11 +42,9 @@ function ProgressChart({ logs }) {
           )
         })}
 
-        {/* Y-axis label */}
         <text x={12} y={height / 2} textAnchor="middle" fill="var(--color-text-tertiary)" fontSize="10"
           transform={`rotate(-90, 12, ${height / 2})`}>Gap (mm)</text>
 
-        {/* Lines per joint type */}
         {jointTypes.map((jt, idx) => {
           const points = logs
             .filter(l => l.joint_type === jt && l.gap_mm != null)
@@ -65,20 +60,19 @@ function ProgressChart({ logs }) {
 
           return (
             <g key={jt}>
-              <path d={path} fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" />
+              <path d={path} fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               {points.map((p, i) => (
-                <circle key={i} cx={p.x} cy={p.y} r="3" fill={color} />
+                <circle key={i} cx={p.x} cy={p.y} r="3.5" fill={color} />
               ))}
             </g>
           )
         })}
       </svg>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-3 mt-2">
+      <div className="flex flex-wrap gap-3 mt-3">
         {jointTypes.map((jt, idx) => (
-          <div key={jt} className="flex items-center gap-1">
-            <div className="w-3 h-3 rounded-full" style={{ background: colors[idx % colors.length] }} />
+          <div key={jt} className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: colors[idx % colors.length] }} />
             <span className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>{jt}</span>
           </div>
         ))}
@@ -88,18 +82,15 @@ function ProgressChart({ logs }) {
 }
 
 function ActivityHeatMap({ logs }) {
-  // 52-week GitHub-style heat map
   const today = new Date()
   const weeks = 52
   const dayMs = 86400000
 
-  // Build date→count map
   const countMap = {}
   for (const log of logs) {
     countMap[log.session_date] = (countMap[log.session_date] || 0) + 1
   }
 
-  // Generate grid: 52 weeks × 7 days
   const cells = []
   const startDate = new Date(today)
   startDate.setDate(startDate.getDate() - (weeks * 7) + (7 - startDate.getDay()))
@@ -131,16 +122,14 @@ function ActivityHeatMap({ logs }) {
 
   return (
     <div className="card p-4">
-      <h3 className="font-semibold text-sm mb-3" style={{ color: 'var(--color-text-primary)' }}>Activity</h3>
+      <h3 className="font-display mb-3" style={{ fontSize: '1.125rem', color: 'var(--color-text-primary)' }}>Shop Time</h3>
       <div className="overflow-x-auto">
         <svg viewBox={`0 0 ${width} ${height}`} style={{ minWidth: 700, width: '100%' }}>
-          {/* Day labels */}
           {['M', '', 'W', '', 'F', '', ''].map((label, i) => (
             <text key={i} x={0} y={20 + i * (cellSize + gap) + cellSize / 2 + 3}
               fill="var(--color-text-tertiary)" fontSize="9">{label}</text>
           ))}
 
-          {/* Cells */}
           {cells.map(c => (
             <rect
               key={c.date}
@@ -155,7 +144,6 @@ function ActivityHeatMap({ logs }) {
             </rect>
           ))}
 
-          {/* Month labels */}
           {cells.filter(c => c.d === 0 && new Date(c.date + 'T12:00:00').getDate() <= 7).map(c => (
             <text key={c.date} x={20 + c.w * (cellSize + gap)} y={14}
               fill="var(--color-text-tertiary)" fontSize="9">
@@ -165,7 +153,6 @@ function ActivityHeatMap({ logs }) {
         </svg>
       </div>
 
-      {/* Legend */}
       <div className="flex items-center gap-1 mt-2 justify-end">
         <span className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>Less</span>
         {[0, 1, 2, 3, 4].map(i => (
@@ -178,7 +165,6 @@ function ActivityHeatMap({ logs }) {
 }
 
 function FitTrend({ logs }) {
-  // Monthly average fit rating
   const monthly = {}
   for (const log of logs) {
     if (!log.fit_rating) continue
@@ -204,9 +190,8 @@ function FitTrend({ logs }) {
 
   return (
     <div className="card p-4">
-      <h3 className="font-semibold text-sm mb-3" style={{ color: 'var(--color-text-primary)' }}>Fit Rating Trend</h3>
+      <h3 className="font-display mb-3" style={{ fontSize: '1.125rem', color: 'var(--color-text-primary)' }}>Fit Rating Trend</h3>
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full">
-        {/* Y-axis */}
         {[1, 2, 3, 4, 5].map(v => (
           <g key={v}>
             <line x1={pad.left} y1={pad.top + ((5 - v) / 4) * (height - pad.top - pad.bottom)}
@@ -217,7 +202,6 @@ function FitTrend({ logs }) {
           </g>
         ))}
 
-        {/* Bars */}
         {averages.map((a, i) => {
           const barH = ((a.avg - 1) / 4) * (height - pad.top - pad.bottom)
           const barX = pad.left + (i * (plotW / averages.length)) + (plotW / averages.length - barW) / 2
@@ -226,7 +210,7 @@ function FitTrend({ logs }) {
 
           return (
             <g key={a.month}>
-              <rect x={barX} y={barY} width={barW} height={barH} rx="3" fill={color} opacity="0.8" />
+              <rect x={barX} y={barY} width={barW} height={barH} rx="4" fill={color} opacity="0.85" />
               <text x={barX + barW / 2} y={height - 8} textAnchor="middle" fill="var(--color-text-tertiary)" fontSize="9">
                 {a.month.substring(5)}
               </text>
@@ -241,26 +225,28 @@ function FitTrend({ logs }) {
 function StatsCards({ logs }) {
   const totalJoints = logs.length
   const uniqueJointTypes = new Set(logs.map(l => l.joint_type)).size
-  const avgGap = logs.filter(l => l.gap_mm != null).length > 0
-    ? (logs.filter(l => l.gap_mm != null).reduce((s, l) => s + l.gap_mm, 0) / logs.filter(l => l.gap_mm != null).length).toFixed(1)
-    : '—'
-  const avgFit = logs.filter(l => l.fit_rating != null).length > 0
-    ? (logs.filter(l => l.fit_rating != null).reduce((s, l) => s + l.fit_rating, 0) / logs.filter(l => l.fit_rating != null).length).toFixed(1)
-    : '—'
+  const withGap = logs.filter(l => l.gap_mm != null)
+  const avgGap = withGap.length > 0
+    ? (withGap.reduce((s, l) => s + l.gap_mm, 0) / withGap.length).toFixed(1)
+    : null
+  const withFit = logs.filter(l => l.fit_rating != null)
+  const avgFit = withFit.length > 0
+    ? (withFit.reduce((s, l) => s + l.fit_rating, 0) / withFit.length).toFixed(1)
+    : null
   const totalMinutes = logs.reduce((s, l) => s + (l.duration_minutes || 0), 0)
 
   const stats = [
-    { label: 'Total Joints', value: totalJoints },
-    { label: 'Joint Types', value: uniqueJointTypes },
-    { label: 'Avg Gap', value: avgGap === '—' ? avgGap : `${avgGap}mm` },
-    { label: 'Avg Fit', value: `${avgFit}/5` },
+    { label: 'Joints', value: totalJoints },
+    { label: 'Types', value: uniqueJointTypes },
+    { label: 'Avg Gap', value: avgGap ? `${avgGap}mm` : '—' },
+    { label: 'Avg Fit', value: avgFit ? `${avgFit}/5` : '—' },
     { label: 'Hours', value: totalMinutes > 0 ? `${(totalMinutes / 60).toFixed(0)}h` : '—' },
   ]
 
   return (
     <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
       {stats.map(s => (
-        <div key={s.label} className="card p-3 text-center">
+        <div key={s.label} className="surface-inset p-3 text-center">
           <div className="text-lg font-bold" style={{ color: 'var(--color-primary)' }}>{s.value}</div>
           <div className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>{s.label}</div>
         </div>
@@ -277,10 +263,16 @@ export default function Skills() {
 
   return (
     <div className="p-4 max-w-2xl mx-auto w-full flex flex-col gap-4">
-      <h1 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Skills</h1>
+      <h1 className="font-display" style={{ fontSize: '1.5rem', color: 'var(--color-text-primary)' }}>
+        Progress
+      </h1>
 
       {logs.length === 0 ? (
-        <EmptyState icon="📊" title="No data yet" description="Log some practice joints to see your progression." />
+        <EmptyState
+          icon="📈"
+          title="Charts need data"
+          description="Log some joints and your progression will appear here — gap trends, fit ratings, shop time."
+        />
       ) : (
         <>
           <StatsCards logs={logs} />

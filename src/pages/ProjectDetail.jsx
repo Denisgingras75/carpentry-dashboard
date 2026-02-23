@@ -73,7 +73,7 @@ export default function ProjectDetail() {
       {/* Project Header */}
       <div className="card p-4">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-lg font-bold">{project.name}</h2>
+          <h2 className="font-display" style={{ fontSize: '1.375rem', color: 'var(--color-text-primary)' }}>{project.name}</h2>
           <span className="text-xs font-medium px-2 py-0.5 rounded-full"
             style={{ background: 'var(--color-surface)', color: PROJECT_STATUSES[project.status]?.color }}>
             {PROJECT_STATUSES[project.status]?.label}

@@ -108,14 +108,14 @@ export default function PortfolioDetail() {
           </>
         ) : (
           <>
-            <h2 className="text-lg font-bold">{item.title}</h2>
+            <h2 className="font-display" style={{ fontSize: '1.375rem', color: 'var(--color-text-primary)' }}>{item.title}</h2>
             {item.description && <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>{item.description}</p>}
             <div className="flex flex-wrap gap-1">
               {(item.materials || []).map(m => (
                 <span key={m} className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'var(--color-surface)', color: 'var(--color-text-secondary)' }}>{m}</span>
               ))}
               {(item.joint_types || []).map(j => (
-                <span key={j} className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'var(--color-warning-bg)', color: 'var(--color-warning)' }}>{j}</span>
+                <span key={j} className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'var(--color-accent-soft)', color: 'var(--color-accent)' }}>{j}</span>
               ))}
             </div>
             <div className="flex gap-4 text-sm" style={{ color: 'var(--color-text-secondary)' }}>

@@ -67,7 +67,9 @@ export default function PracticeLog() {
   return (
     <div className="p-4 max-w-2xl mx-auto w-full flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Practice Log</h1>
+        <h1 className="font-display" style={{ fontSize: '1.5rem', color: 'var(--color-text-primary)' }}>
+          Practice Log
+        </h1>
         <button className="btn-primary text-sm" onClick={() => setShowForm(!showForm)}>
           {showForm ? 'Cancel' : '+ New Entry'}
         </button>
@@ -124,13 +126,16 @@ export default function PracticeLog() {
       ) : logs.length === 0 ? (
         <EmptyState
           icon="🪚"
-          title="No practice logs yet"
-          description="Start logging your joints to track progress over time."
+          title="Your ledger is empty"
+          description="Every joint tells a story. Log your first one from the Shop page, or tap + New Entry above."
         />
       ) : (
         dates.map(date => (
           <div key={date}>
-            <h3 className="text-xs font-semibold uppercase tracking-wide mb-2 mt-2" style={{ color: 'var(--color-text-tertiary)' }}>
+            <h3
+              className="text-xs font-semibold uppercase tracking-wider mb-2 mt-2"
+              style={{ color: 'var(--color-text-tertiary)', letterSpacing: '0.08em' }}
+            >
               {new Date(date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
             </h3>
             <div className="flex flex-col gap-2">
@@ -138,7 +143,7 @@ export default function PracticeLog() {
                 <Link
                   key={log.id}
                   to={`/log/${log.id}`}
-                  className="card p-3 flex items-center justify-between"
+                  className="card-accent flex items-center justify-between p-3"
                   style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                   <div>
@@ -149,7 +154,7 @@ export default function PracticeLog() {
                   </div>
                   <div className="flex items-center gap-3">
                     {log.gap_mm != null && (
-                      <span className="text-xs px-2 py-0.5 rounded-full"
+                      <span className="text-xs font-medium px-2 py-0.5 rounded-full"
                         style={{ background: 'var(--color-surface)', color: 'var(--color-text-secondary)' }}>
                         {log.gap_mm}mm
                       </span>

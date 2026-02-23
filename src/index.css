@@ -1,50 +1,53 @@
 @import "tailwindcss";
 
 /* ========================================
-   Workshop Theme — Carpentry Dashboard
+   Workshop Theme — Craftsman's Ledger
    ======================================== */
 
 @theme {
   --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Instrument Serif', Georgia, serif;
 }
 
 :root {
-  /* Workshop (Light) */
-  --color-primary: #8B5E3C;
-  --color-primary-hover: #7A5235;
+  --color-primary: #6B4226;
+  --color-primary-hover: #5A3720;
   --color-accent: #C8922A;
   --color-accent-hover: #B8841F;
-  --color-bg: #F5F0EB;
-  --color-surface: #FAF7F4;
-  --color-surface-elevated: #FFFFFF;
-  --color-card: #FFFFFF;
+  --color-accent-soft: rgba(200, 146, 42, 0.12);
+  --color-bg: #E8E0D4;
+  --color-surface: #EDE6DB;
+  --color-surface-elevated: #F4EEE5;
+  --color-card: #F4EEE5;
   --color-text-primary: #2C1810;
   --color-text-secondary: #6B5B4E;
   --color-text-tertiary: #9C8B7E;
-  --color-text-on-primary: #FFFFFF;
-  --color-success: #2D6A4F;
-  --color-success-bg: #D4EDDA;
+  --color-text-on-primary: #F4EEE5;
+  --color-success: #3A7D5C;
+  --color-success-soft: rgba(58, 125, 92, 0.12);
   --color-warning: #C8922A;
-  --color-warning-bg: #FFF3CD;
-  --color-danger: #C0392B;
-  --color-danger-bg: #F8D7DA;
-  --color-border: #E0D5C9;
-  --color-border-light: #EDE7DF;
-  --color-rating-1: #C0392B;
-  --color-rating-2: #D35400;
+  --color-danger: #A63D2F;
+  --color-danger-soft: rgba(166, 61, 47, 0.1);
+  --color-border: #D4C9BA;
+  --color-border-light: #E0D8CC;
+  --color-divider: #C9BDA8;
+  --color-rating-1: #A63D2F;
+  --color-rating-2: #C27035;
   --color-rating-3: #C8922A;
-  --color-rating-4: #2D6A4F;
-  --color-rating-5: #1B5E3A;
-  --color-heatmap-0: #EDE7DF;
+  --color-rating-4: #3A7D5C;
+  --color-rating-5: #2B6645;
+  --color-heatmap-0: #E0D8CC;
   --color-heatmap-1: #D4C4A8;
   --color-heatmap-2: #C8922A;
   --color-heatmap-3: #8B5E3C;
   --color-heatmap-4: #5C3A1E;
-  --shadow-card: 0 1px 3px rgba(44, 24, 16, 0.08);
-  --shadow-elevated: 0 4px 12px rgba(44, 24, 16, 0.12);
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
+  --shadow-card: 0 1px 2px rgba(44, 24, 16, 0.06);
+  --shadow-elevated: 0 4px 16px rgba(44, 24, 16, 0.1);
+  --shadow-inset: inset 0 1px 3px rgba(44, 24, 16, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
 }
 
 /* Night Shop (Dark) */
@@ -53,33 +56,35 @@
   --color-primary-hover: #D9A43B;
   --color-accent: #D4A85C;
   --color-accent-hover: #E0BA6E;
+  --color-accent-soft: rgba(212, 168, 92, 0.1);
   --color-bg: #1A1208;
-  --color-surface: #241A0E;
-  --color-surface-elevated: #2E2214;
-  --color-card: #2E2214;
-  --color-text-primary: #F5F0EB;
+  --color-surface: #201810;
+  --color-surface-elevated: #2A2018;
+  --color-card: #2A2018;
+  --color-text-primary: #F0E8DA;
   --color-text-secondary: #B8A99A;
   --color-text-tertiary: #7D6E5E;
   --color-text-on-primary: #1A1208;
   --color-success: #6BB384;
-  --color-success-bg: #1A3A2A;
+  --color-success-soft: rgba(107, 179, 132, 0.1);
   --color-warning: #D4A85C;
-  --color-warning-bg: #3A2E1A;
   --color-danger: #E07B6B;
-  --color-danger-bg: #3A1A1A;
+  --color-danger-soft: rgba(224, 123, 107, 0.1);
   --color-border: #3E3024;
   --color-border-light: #342818;
-  --color-heatmap-0: #2E2214;
+  --color-divider: #4A3A28;
+  --color-heatmap-0: #2A2018;
   --color-heatmap-1: #4A3A24;
   --color-heatmap-2: #8B6E3C;
   --color-heatmap-3: #C8922A;
   --color-heatmap-4: #D4A85C;
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 /* ========================================
-   Base Styles
+   Base
    ======================================== */
 
 * {
@@ -99,6 +104,8 @@ body {
   line-height: 1.5;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
+  /* Subtle grain texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
 #root {
@@ -108,7 +115,16 @@ body {
 }
 
 /* ========================================
-   Utility Classes
+   Typography
+   ======================================== */
+
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+/* ========================================
+   Cards & Surfaces
    ======================================== */
 
 .card {
@@ -116,44 +132,72 @@ body {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
   border: 1px solid var(--color-border-light);
+  position: relative;
 }
+
+.card-accent {
+  background: var(--color-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border-light);
+  border-left: 3px solid var(--color-accent);
+}
+
+.surface-inset {
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-inset);
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
 
 .btn-primary {
   background: var(--color-primary);
   color: var(--color-text-on-primary);
   border: none;
   border-radius: var(--radius-sm);
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-weight: 600;
   font-size: 0.9375rem;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: all 0.2s;
+  letter-spacing: 0.01em;
 }
 
 .btn-primary:hover {
   background: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(107, 66, 38, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 .btn-secondary {
   background: transparent;
   color: var(--color-primary);
-  border: 1.5px solid var(--color-primary);
+  border: 1.5px solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: 10px 20px;
   font-weight: 600;
   font-size: 0.9375rem;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.2s;
 }
 
 .btn-secondary:hover {
   background: var(--color-primary);
   color: var(--color-text-on-primary);
+  border-color: var(--color-primary);
 }
 
 .btn-ghost {
@@ -173,21 +217,58 @@ body {
   color: var(--color-text-primary);
 }
 
+/* ========================================
+   Chip Buttons (for Quick Log)
+   ======================================== */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chip:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.chip.active {
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border-color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ========================================
+   Inputs
+   ======================================== */
+
 .input {
   width: 100%;
-  padding: 10px 14px;
+  padding: 11px 14px;
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface-elevated);
   color: var(--color-text-primary);
   font-size: 0.9375rem;
   font-family: inherit;
-  transition: border-color 0.15s;
+  transition: all 0.2s;
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
 }
 
 .input::placeholder {
@@ -196,33 +277,38 @@ body {
 
 textarea.input {
   resize: vertical;
-  min-height: 80px;
+  min-height: 72px;
 }
 
 select.input {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B5B4E' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 12px center;
+  background-position: right 14px center;
   padding-right: 36px;
 }
 
 /* ========================================
-   Fit Rating Dots
+   Fit Rating
    ======================================== */
 
 .fit-rating {
   display: inline-flex;
-  gap: 3px;
+  gap: 6px;
 }
 
 .fit-dot {
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--color-border);
-  transition: background 0.15s;
+  transition: all 0.15s;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fit-dot:hover:not([style*="default"]) {
+  transform: scale(1.2);
 }
 
 .fit-dot.active.r1 { background: var(--color-rating-1); }
@@ -231,32 +317,77 @@ select.input {
 .fit-dot.active.r4 { background: var(--color-rating-4); }
 .fit-dot.active.r5 { background: var(--color-rating-5); }
 
+/* Big variant for Quick Log */
+.fit-rating-lg {
+  display: inline-flex;
+  gap: 10px;
+}
+
+.fit-dot-lg {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  transition: all 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-tertiary);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fit-dot-lg:hover {
+  border-color: var(--color-primary);
+  transform: scale(1.08);
+}
+
+.fit-dot-lg.active {
+  border-color: transparent;
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.fit-dot-lg.active.r1 { background: var(--color-rating-1); border-color: var(--color-rating-1); }
+.fit-dot-lg.active.r2 { background: var(--color-rating-2); border-color: var(--color-rating-2); }
+.fit-dot-lg.active.r3 { background: var(--color-rating-3); border-color: var(--color-rating-3); }
+.fit-dot-lg.active.r4 { background: var(--color-rating-4); border-color: var(--color-rating-4); }
+.fit-dot-lg.active.r5 { background: var(--color-rating-5); border-color: var(--color-rating-5); }
+
 /* ========================================
    Scrollbar
    ======================================== */
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 3px;
-}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
 
 /* ========================================
    Animations
    ======================================== */
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-in {
-  animation: fadeIn 0.2s ease-out;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.animate-scale {
+  animation: scaleIn 0.2s ease-out;
 }

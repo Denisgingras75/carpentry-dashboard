@@ -1,10 +1,6 @@
 -- ========================================
 -- Carpentry Dashboard — Database Schema
--- Source of truth. Run in Supabase SQL Editor.
 -- ========================================
-
--- Enable UUID generation
-create extension if not exists "uuid-ossp";
 
 -- ========================================
 -- Practice Logs
@@ -28,6 +24,24 @@ create index idx_practice_logs_date on practice_logs(session_date);
 create index idx_practice_logs_joint on practice_logs(joint_type);
 
 -- ========================================
+-- Portfolio Items (before craft_photos — FK dependency)
+-- ========================================
+create table if not exists portfolio_items (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id) on delete cascade not null,
+  title text not null,
+  description text,
+  materials text[] default '{}',
+  joint_types text[] default '{}',
+  completed_date date,
+  skill_rating smallint check (skill_rating between 1 and 10),
+  created_at timestamptz default now() not null,
+  updated_at timestamptz default now() not null
+);
+
+create index idx_portfolio_items_user on portfolio_items(user_id);
+
+-- ========================================
 -- Craft Photos
 -- ========================================
 create table if not exists craft_photos (
@@ -45,24 +59,6 @@ create table if not exists craft_photos (
 create index idx_craft_photos_user on craft_photos(user_id);
 create index idx_craft_photos_log on craft_photos(practice_log_id);
 create index idx_craft_photos_portfolio on craft_photos(portfolio_item_id);
-
--- ========================================
--- Portfolio Items
--- ========================================
-create table if not exists portfolio_items (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid references auth.users(id) on delete cascade not null,
-  title text not null,
-  description text,
-  materials text[] default '{}',
-  joint_types text[] default '{}',
-  completed_date date,
-  skill_rating smallint check (skill_rating between 1 and 10),
-  created_at timestamptz default now() not null,
-  updated_at timestamptz default now() not null
-);
-
-create index idx_portfolio_items_user on portfolio_items(user_id);
 
 -- ========================================
 -- Projects
@@ -139,41 +135,26 @@ alter table project_milestones enable row level security;
 alter table checklist_items enable row level security;
 alter table checklist_completions enable row level security;
 
--- Practice Logs: user owns their data
 create policy "Users manage own practice logs" on practice_logs
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
--- Craft Photos: user owns their data
 create policy "Users manage own photos" on craft_photos
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
--- Portfolio Items: user owns their data
 create policy "Users manage own portfolio" on portfolio_items
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
--- Projects: user owns their data
 create policy "Users manage own projects" on projects
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
--- Project Milestones: user owns their data
 create policy "Users manage own milestones" on project_milestones
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
--- Checklist Items: user owns their data
 create policy "Users manage own checklist items" on checklist_items
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
--- Checklist Completions: user owns their data
 create policy "Users manage own completions" on checklist_completions
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-
--- ========================================
--- Storage Bucket
--- ========================================
--- Run in Supabase Dashboard > Storage:
--- Create bucket: craft-photos (public)
--- Policy: authenticated users can upload to {userId}/*
--- Policy: public read on all files
 
 -- ========================================
 -- Updated_at trigger

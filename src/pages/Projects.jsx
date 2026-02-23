@@ -43,7 +43,7 @@ export default function Projects() {
     if (items.length === 0) return null
     return (
       <div>
-        <h2 className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--color-text-tertiary)' }}>
+        <h2 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--color-text-tertiary)', letterSpacing: '0.08em' }}>
           {title} ({items.length})
         </h2>
         <div className="flex flex-col gap-2">
@@ -74,7 +74,7 @@ export default function Projects() {
   return (
     <div className="p-4 max-w-2xl mx-auto w-full flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Projects</h1>
+        <h1 className="font-display" style={{ fontSize: '1.5rem', color: 'var(--color-text-primary)' }}>Projects</h1>
         <button className="btn-primary text-sm" onClick={() => setShowForm(!showForm)}>
           {showForm ? 'Cancel' : '+ New'}
         </button>
@@ -94,7 +94,7 @@ export default function Projects() {
       {loading ? (
         <div className="py-12 text-center" style={{ color: 'var(--color-text-tertiary)' }}>Loading...</div>
       ) : projects.length === 0 ? (
-        <EmptyState icon="📐" title="No projects" description="Create a project to track your builds from start to finish." />
+        <EmptyState icon="📐" title="No active builds" description="Got something on the bench? Track it here — milestones, target dates, the whole build arc." />
       ) : (
         <>
           {renderSection('Active', active)}

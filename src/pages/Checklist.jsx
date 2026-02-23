@@ -64,7 +64,7 @@ export default function Checklist() {
     <div className="p-4 max-w-2xl mx-auto w-full flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Weekly Checklist</h1>
+          <h1 className="font-display" style={{ fontSize: '1.5rem', color: 'var(--color-text-primary)' }}>Weekly Checklist</h1>
           <p className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>Week of {weekLabel}</p>
         </div>
         <button className="btn-primary text-sm" onClick={() => setShowForm(!showForm)}>
@@ -109,11 +109,11 @@ export default function Checklist() {
       {loading ? (
         <div className="py-12 text-center" style={{ color: 'var(--color-text-tertiary)' }}>Loading...</div>
       ) : items.length === 0 ? (
-        <EmptyState icon="✅" title="No checklist items" description="Add recurring weekly tasks to build consistent habits." />
+        <EmptyState icon="✅" title="Your weekly rhythm" description="Sharpen the chisels, clean the bench, practice a cut. Add the habits that keep the shop running." />
       ) : (
         Object.entries(grouped).map(([category, catItems]) => (
           <div key={category}>
-            <h2 className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--color-text-tertiary)' }}>
+            <h2 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--color-text-tertiary)', letterSpacing: '0.08em' }}>
               {category}
             </h2>
             <div className="card divide-y" style={{ borderColor: 'var(--color-border-light)' }}>
