@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import joints, { JOINT_CATEGORIES, CATEGORY_ORDER } from '../data/joints'
 import techniques, { TECHNIQUE_CATEGORIES, TECHNIQUE_CATEGORY_ORDER } from '../data/techniques'
 import woods from '../data/woods'
+import projects from '../data/projects-library'
+import layoutTopics from '../data/layout-knowledge'
 
 const TABS = ['joints', 'techniques', 'wood', 'resources']
 
@@ -69,7 +71,7 @@ export default function Library() {
           The Apprentice's Guide
         </h1>
         <p className="text-sm mt-1" style={{ color: 'var(--color-text-tertiary)' }}>
-          {joints.length} joints · {techniques.length} techniques · {woods.length} species
+          {joints.length} joints · {techniques.length} techniques · {woods.length} species · {projects.length} plans · {layoutTopics.length} layout topics
         </p>
       </div>
 
@@ -98,7 +100,7 @@ export default function Library() {
           </div>
           <div>
             <div className="font-medium text-sm">Project Plans</div>
-            <div className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>100 builds</div>
+            <div className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>{projects.length} builds</div>
           </div>
         </Link>
         <Link
@@ -126,7 +128,7 @@ export default function Library() {
           </div>
           <div>
             <div className="font-medium text-sm">Layout Guide</div>
-            <div className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>Measure twice</div>
+            <div className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>{layoutTopics.length} topics</div>
           </div>
         </Link>
       </div>

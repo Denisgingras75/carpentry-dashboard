@@ -6,6 +6,7 @@ import { usePracticeLogs, useCreatePracticeLog } from '../hooks/usePracticeLogs'
 import { getJointBySlug } from '../data/joints'
 import { getWoodBySlug } from '../data/woods'
 import techniques from '../data/techniques'
+import projects from '../data/projects-library'
 import FitRating from '../components/FitRating'
 
 function GapMeter({ tolerance }) {
@@ -311,6 +312,40 @@ export default function JointDetail() {
                   <div>
                     <div className="font-medium text-sm">{tech.name}</div>
                     <div className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>{tech.summary.split('.')[0]}</div>
+                  </div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-text-tertiary)', opacity: 0.5, flexShrink: 0 }}>
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )
+      })()}
+
+      {/* Projects Using This Joint */}
+      {(() => {
+        const jointProjects = projects.filter(p => p.joints && p.joints.includes(slug))
+        if (jointProjects.length === 0) return null
+        return (
+          <div>
+            <h2
+              className="text-xs font-semibold uppercase tracking-wider mb-2"
+              style={{ color: 'var(--color-text-tertiary)', letterSpacing: '0.08em' }}
+            >
+              Projects That Use This Joint
+            </h2>
+            <div className="flex flex-col gap-1.5">
+              {jointProjects.slice(0, 8).map(p => (
+                <Link
+                  key={p.slug}
+                  to={`/plan/${p.slug}`}
+                  className="card-accent flex items-center justify-between py-2.5 px-3"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <div>
+                    <div className="font-medium text-sm">{p.name}</div>
+                    <div className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>{p.estimatedTime}</div>
                   </div>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-text-tertiary)', opacity: 0.5, flexShrink: 0 }}>
                     <polyline points="9 18 15 12 9 6" />

@@ -1,6 +1,7 @@
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { getTechniqueBySlug } from '../data/techniques'
 import { getJointBySlug } from '../data/joints'
+import projects from '../data/projects-library'
 
 function DifficultyBadge({ level }) {
   const labels = ['', 'Beginner', 'Easy', 'Intermediate', 'Advanced', 'Expert']
@@ -187,6 +188,40 @@ export default function TechniqueDetail() {
           </div>
         </div>
       )}
+
+      {/* Projects Using This Technique */}
+      {(() => {
+        const techProjects = projects.filter(p => p.skills && p.skills.includes(slug))
+        if (techProjects.length === 0) return null
+        return (
+          <div>
+            <h2
+              className="text-xs font-semibold uppercase tracking-wider mb-2"
+              style={{ color: 'var(--color-text-tertiary)', letterSpacing: '0.08em' }}
+            >
+              Projects That Use This Technique
+            </h2>
+            <div className="flex flex-col gap-1.5">
+              {techProjects.slice(0, 8).map(p => (
+                <Link
+                  key={p.slug}
+                  to={`/plan/${p.slug}`}
+                  className="card-accent flex items-center justify-between py-2.5 px-3"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <div>
+                    <div className="font-medium text-sm">{p.name}</div>
+                    <div className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>{p.estimatedTime}</div>
+                  </div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-text-tertiary)', opacity: 0.5, flexShrink: 0 }}>
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )
+      })()}
 
       {/* Related Techniques */}
       {technique.relatedTechniques && (

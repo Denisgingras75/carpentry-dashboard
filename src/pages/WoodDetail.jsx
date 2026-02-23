@@ -1,5 +1,7 @@
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { getWoodBySlug, getHardnessLabel, getWorkabilityLabel } from '../data/woods'
+import { getJointBySlug } from '../data/joints'
+import projects from '../data/projects-library'
 
 export default function WoodDetail() {
   const { slug } = useParams()
@@ -141,19 +143,56 @@ export default function WoodDetail() {
             Best Joints for {wood.name}
           </h2>
           <div className="flex flex-wrap gap-2">
-            {wood.bestJoints.map(slug => (
-              <Link
-                key={slug}
-                to={`/joint/${slug}`}
-                className="chip"
-                style={{ textDecoration: 'none' }}
-              >
-                {slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
-              </Link>
-            ))}
+            {wood.bestJoints.map(jSlug => {
+              const joint = getJointBySlug(jSlug)
+              return (
+                <Link
+                  key={jSlug}
+                  to={`/joint/${jSlug}`}
+                  className="chip"
+                  style={{ textDecoration: 'none' }}
+                >
+                  {joint ? joint.name : jSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+                </Link>
+              )
+            })}
           </div>
         </div>
       )}
+
+      {/* Projects Using This Wood */}
+      {(() => {
+        const woodProjects = projects.filter(p => p.woods && p.woods.includes(slug))
+        if (woodProjects.length === 0) return null
+        return (
+          <div>
+            <h2
+              className="text-xs font-semibold uppercase tracking-wider mb-2"
+              style={{ color: 'var(--color-text-tertiary)', letterSpacing: '0.08em' }}
+            >
+              Projects Using {wood.name}
+            </h2>
+            <div className="flex flex-col gap-1.5">
+              {woodProjects.slice(0, 8).map(p => (
+                <Link
+                  key={p.slug}
+                  to={`/plan/${p.slug}`}
+                  className="card-accent flex items-center justify-between py-2.5 px-3"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <div>
+                    <div className="font-medium text-sm">{p.name}</div>
+                    <div className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>{p.estimatedTime}</div>
+                  </div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-text-tertiary)', opacity: 0.5, flexShrink: 0 }}>
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )
+      })()}
 
       {/* Common Uses */}
       {wood.uses && (
